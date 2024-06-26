@@ -1,0 +1,8 @@
+blockchain-parser
+couchbase
+dune-client
+jupyter
+kaleido
+pandas
+plotly
+python-dotenv

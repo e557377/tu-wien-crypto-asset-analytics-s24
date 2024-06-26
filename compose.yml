@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+#    user: 1000:1000
+    environment:
+      POSTGRES_DB: bitcoin
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    command: >-
+      -c listen_addresses=*
+      -c maintenance_work_mem=2GB
+      -c max_parallel_maintenance_workers=4
+      -c max_parallel_workers_per_gather=4
+      -c max_parallel_workers=8
+      -c max_worker_processes=8
+      -c max_wal_senders=0
+      -c random_page_cost=1
+      -c synchronous_commit=off
+      -c commit_delay=100000
+      -c full_page_writes=off
+      -c wal_writer_delay=10000
+      -c wal_writer_flush_after=64MB
+      -c wal_buffers=128MB
+      -c wal_level=minimal
+      -c wal_init_zero=off
+      -c wal_recycle=off
+
+  couchbase:
+    image: couchbase
+    container_name: couchbase
+    volumes:
+      - ./data/couchbase:/opt/couchbase/var
+    ports:
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 8094:8094
+      - 11210:11210
